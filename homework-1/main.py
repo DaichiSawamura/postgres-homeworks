@@ -3,12 +3,6 @@ import csv
 
 """Скрипт для заполнения данными таблиц в БД Postgres."""
 
-with open("employees_data.csv", "r") as f:
-    next(f)
-    list_empl_date = []
-    for i in f:
-        list_empl_date.append(i.strip().split(","))
-
 with psycopg2.connect(
         host='localhost',
         database='north',
