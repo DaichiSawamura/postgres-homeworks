@@ -13,20 +13,23 @@ with psycopg2.connect(
         with open("employees_data.csv") as f:
             next(f)
             data = csv.reader(f)
+            x = 0
             for i in data:
-                cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s, %s)",
-                            (i[0], i[1], i[2], i[3], i[4]))
-        with open("orders_data.csv") as f:
-            next(f)
-            data = csv.reader(f)
-            for i in data:
-                cur.execute("INSERT INTO orders VALUES (%s, %s, %s, %s, %s)",
-                            (i[0], i[1], i[2], i[3], i[4]))
+                x += 1
+                cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)",
+                            (x, i[0], i[1], i[2], i[3], i[4]))
         with open("customers_data.csv") as f:
             next(f)
             data = csv.reader(f)
             for i in data:
                 cur.execute("INSERT INTO customers VALUES (%s, %s, %s)",
                             (i[0], i[1], i[2]))
+        with open("orders_data.csv") as f:
+            next(f)
+            data = csv.reader(f)
+            for i in data:
+                cur.execute("INSERT INTO orders VALUES (%s, %s, %s, %s, %s)",
+                            (i[0], i[1], i[2], i[3], i[4]))
+
 
 conn.close()
