@@ -19,12 +19,12 @@ WHERE discontinued=0 AND units_in_stock<25 AND category_id IN (SELECT category_i
 ORDER BY units_in_stock
 
 -- 3. Список компаний заказчиков (company_name из табл customers), не сделавших ни одного заказа
-SELECT customer_id FROM customers
-EXCEPT
-SELECT customer_id FROM orders
+SELECT company_name FROM customers
+LEFT JOIN orders USING(customer_id)
+WHERE order_id IS NULL
 
 -- 4. уникальные названия продуктов, которых заказано ровно 10 единиц (количество заказанных единиц см в колонке quantity табл order_details)
 -- Этот запрос написать именно с использованием подзапроса.
 SELECT DISTINCT product_name FROM products
 JOIN order_details USING(product_id)
-WHERE EXISTS (SELECT quantity FROM order_details WHERE quantity=10)
+WHERE product_id = ANY(SELECT DISTINCT product_id FROM order_details WHERE quantity=10)
